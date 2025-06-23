@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::656155181443:oidc-provider/YOUR_OIDC_PROVIDER"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "YOUR_OIDC_PROVIDER:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
+    ]
+}
