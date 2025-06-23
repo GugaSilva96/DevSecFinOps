@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    volume.beta.kubernetes.io/storage-provisioner: driver.longhorn.io
+    volume.kubernetes.io/storage-provisioner: driver.longhorn.io
+  creationTimestamp: '2025-06-12T22:24:52Z'
+  finalizers:
+    - kubernetes.io/pvc-protection
+  labels:
+    app.kubernetes.io/component: master
+    app.kubernetes.io/instance: gitlab
+    app.kubernetes.io/name: redis
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:pv.kubernetes.io/bind-completed: {}
+            f:pv.kubernetes.io/bound-by-controller: {}
+            f:volume.beta.kubernetes.io/storage-provisioner: {}
+            f:volume.kubernetes.io/storage-provisioner: {}
+          f:labels:
+            .: {}
+            f:app.kubernetes.io/component: {}
+            f:app.kubernetes.io/instance: {}
+            f:app.kubernetes.io/name: {}
+        f:spec:
+          f:accessModes: {}
+          f:resources:
+            f:requests:
+              .: {}
+              f:storage: {}
+          f:volumeMode: {}
+          f:volumeName: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: '2025-06-12T22:24:54Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:accessModes: {}
+          f:capacity:
+            .: {}
+            f:storage: {}
+          f:phase: {}
+      manager: kube-controller-manager
+      operation: Update
+      subresource: status
+      time: '2025-06-12T22:24:54Z'
+  name: redis-data-gitlab-redis-master-0
+  namespace: gitlab-o3s
+  resourceVersion: '1371879'
+  uid: e94cf7dc-2aac-4043-94ec-1d82ac7ec088
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+  volumeName: pvc-e94cf7dc-2aac-4043-94ec-1d82ac7ec088
+status:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 8Gi
+  phase: Bound

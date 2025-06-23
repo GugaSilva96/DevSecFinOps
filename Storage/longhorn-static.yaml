@@ -1,0 +1,27 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  creationTimestamp: '2025-06-10T20:29:47Z'
+  managedFields:
+    - apiVersion: storage.k8s.io/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:allowVolumeExpansion: {}
+        f:parameters:
+          .: {}
+          f:staleReplicaTimeout: {}
+        f:provisioner: {}
+        f:reclaimPolicy: {}
+        f:volumeBindingMode: {}
+      manager: longhorn-manager
+      operation: Update
+      time: '2025-06-10T20:29:47Z'
+  name: longhorn-static
+  resourceVersion: '7238'
+  uid: 47d81613-dafa-4532-bcdb-906e865a9212
+parameters:
+  staleReplicaTimeout: '30'
+provisioner: driver.longhorn.io
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
