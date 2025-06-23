@@ -1,0 +1,88 @@
+controllerManager:
+  replicaCount: 1  # ✅ Mantido aqui (padrão do chart)
+  service:
+    type: ClusterIP
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  # ✅ MANTER APENAS VARIÁVEIS SEGURAS
+  env:
+    GOMEMLIMIT: "400MiB"
+    GOGC: "100"
+
+  terminationGracePeriodSeconds: 60
+
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 5
+
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+dashboard:
+  enabled: true
+  service:
+    type: ClusterIP
+    port: 2333
+
+  envFrom:
+    - secretRef:
+        name: chaos-mesh-auth
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - host: chaosmesh.rancher.pointertech.digital
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: chaos-mesh-tls
+        hosts:
+          - chaosmesh.rancher.pointertech.digital
+
+chaosDaemon:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
+
+webhook:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+# ✅ DESABILITAR COMPONENTES DESNECESSÁRIOS
+dnsServer:
+  create: false

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: configure-fd-limits
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: configure-fd-limits
+  template:
+    metadata:
+      labels:
+        name: configure-fd-limits
+    spec:
+      hostPID: true
+      containers:
+      - name: sysctl
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          echo "* soft nofile 1048576" >> /host/etc/security/limits.conf
+          echo "* hard nofile 1048576" >> /host/etc/security/limits.conf
+          sleep 3600
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: etc
+          mountPath: /host/etc
+      volumes:
+      - name: etc
+        hostPath:
+          path: /etc
